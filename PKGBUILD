@@ -1,5 +1,5 @@
 # Maintainer: Saeed Badrelden <you@example.com>
-pkgname=helwan-rescue-toolkit
+pkgname=hel-rescue-toolkit
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="Essential recovery GUI tools for Helwan Linux"
