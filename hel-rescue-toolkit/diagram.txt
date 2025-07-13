@@ -1,0 +1,33 @@
+hel-rescue-toolkit/:
+
+
+📁 hel-rescue-toolkit/
+├── 📄 __init__.py
+├── 📁 helwan
+│   ├── 📄 __init__.py
+│   ├── 📁 backend
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 runner.py
+│   │   └── 📁 scripts
+│   │       ├── 📄 __init__.py
+│   │       ├── 📄 clean_cache.sh
+│   │       ├── 📄 export_logs.sh
+│   │       ├── 📄 fix_grub.sh
+│   │       ├── 📄 fix_network.sh
+│   │       ├── 📄 fix_permissions.sh
+│   │       ├── 📄 open_chroot.sh
+│   │       ├── 📄 regen_initramfs.sh
+│   │       ├── 📄 rollback_updates.sh
+│   │       ├── 📄 safe_exit.sh
+│   │       └── 📄 system_check.sh
+│   ├── 📄 main.py
+│   └── 📁 resources
+│       ├── 📄 __init__.py
+│       └── 📁 icons
+│           ├── 📄 __init__.py
+│           ├── 📄 about.png
+│           ├── 📄 help.png
+│           └── 📄 logo.png
+├── 📄 helwan-rescue.desktop
+├── 📄 requirements.txt
+└── 📄 run.py
