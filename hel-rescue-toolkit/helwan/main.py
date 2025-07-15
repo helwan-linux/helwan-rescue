@@ -5,7 +5,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout, QWidget,
     QPushButton, QLabel, QHBoxLayout, QMessageBox,
-    QFileDialog, QMenuBar, QToolBar, QStatusBar
+    QFileDialog, QMenuBar, QToolBar, QStatusBar,
+    QDialog, QTextBrowser # أضف QTextBrowser و QDialog هنا
 )
 import subprocess
 import os
@@ -15,6 +16,26 @@ BASE_DIR = Path(__file__).resolve().parent
 ICON_DIR = BASE_DIR / "resources" / "icons"
 SCRIPTS_DIR = BASE_DIR / "backend" / "scripts"
 
+class HelpDialog(QDialog): #
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Usage Help")
+        self.setFixedSize(400, 500) # يمكنك تعديل الحجم حسب الحاجة
+
+        layout = QVBoxLayout(self)
+
+        self.text_browser = QTextBrowser(self) #
+        self.text_browser.setOpenExternalLinks(True) # إذا كان هناك روابط في ملف المساعدة
+        layout.addWidget(self.text_browser)
+
+        close_button = QPushButton("Close")
+        close_button.clicked.connect(self.accept)
+        layout.addWidget(close_button, alignment=Qt.AlignCenter) #
+
+    def set_help_content(self, content): #
+        self.text_browser.setText(content)
+        
+        
 class RecoveryWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -94,10 +115,23 @@ class RecoveryWindow(QMainWindow):
             self.script_path_label.setText(f"Scripts: {SCRIPTS_DIR}")
 
     def show_about(self):
-        QMessageBox.information(self, "About", "Helwan Rescue Toolkit\nBy Saeed.")
+        QMessageBox.information(self, "About", "Helwan Rescue Toolkit\nBy Saeed Badrelden\nhelwanlinux@gmail.com.")
 
     def show_help(self):
-        QMessageBox.information(self, "Help", "Click any tool button to run it. Make sure you're root.")
+        help_file_path = BASE_DIR / "resources" / "usage_help.txt"
+        if help_file_path.exists():
+            try:
+                with open(help_file_path, "r", encoding="utf-8") as f:
+                    help_content = f.read()
+                
+                help_dialog = HelpDialog(self) # أنشئ مثيل من HelpDialog
+                help_dialog.set_help_content(help_content) # قم بتعيين المحتوى
+                help_dialog.exec_() # اعرض مربع الحوار بشكل نمطي (modal)
+
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Could not read help file: {e}")
+        else:
+            QMessageBox.information(self, "Usage Help", "Help file not found.")
 
     def open_log_file(self):
         log_path = os.path.expanduser("~/.cache/helwan-rescue/history.log")
