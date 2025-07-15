@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Helwan Rescue Toolkit
+GenericName=System Recovery Tools
+Comment=Essential recovery utilities for Helwan Linux
+Exec=/opt/helwan-rescue-toolkit/run.sh
+Icon=helwan-rescue
+Terminal=false
+Categories=System;Utility;
+StartupNotify=true
