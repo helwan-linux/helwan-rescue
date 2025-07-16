@@ -1,0 +1,11 @@
+# your_project_root/helwan/resources/helwan-rescue.desktop
+[Desktop Entry]
+Name=Helwan Rescue Toolkit
+Comment=A comprehensive rescue toolkit for Arch Linux-based systems.
+Exec=sudo python3 /usr/bin/helwan-rescue-toolkit
+Icon=helwan-rescue-toolkit # هذا يشير إلى اسم الأيقونة التي سنقوم بتثبيتها
+Terminal=false
+Type=Application
+Categories=System;Utility;Recovery;
+Keywords=Arch;Linux;Rescue;Repair;Fix;Troubleshoot;System;
+StartupNotify=true
