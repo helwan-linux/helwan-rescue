@@ -35,21 +35,29 @@ hel-rescue-toolkit/
 │       ├── 📁 icons
 │       │   ├── 📄 __init__.py
 │       │   ├── 📄 about.png
+│       │   ├── 📄 add_user.png
 │       │   ├── 📄 backup.png
 │       │   ├── 📄 chroot.png
 │       │   ├── 📄 clean.png
+│       │   ├── 📄 create.png
 │       │   ├── 📄 disk_space.png
 │       │   ├── 📄 downgrade.png
 │       │   ├── 📄 export_logs.png
 │       │   ├── 📄 grub.png
 │       │   ├── 📄 help.png
+│       │   ├── 📄 initramfs.png
+│       │   ├── 📄 journal.png
+│       │   ├── 📄 kill_process.png
 │       │   ├── 📄 logo.png
 │       │   ├── 📄 mountpoints.png
 │       │   ├── 📄 network.png
 │       │   ├── 📄 permissions.png
 │       │   ├── 📄 reinstall.png
+│       │   ├── 📄 reset_password.png
+│       │   ├── 📄 restore_snapshot.png
 │       │   ├── 📄 rollback.png
 │       │   ├── 📄 safe_exit.png
+│       │   ├── 📄 snapshot.png
 │       │   └── 📄 status.png
 │       └── 📄 usage_help.txt
 ├── 📄 helwan-rescue.desktop
