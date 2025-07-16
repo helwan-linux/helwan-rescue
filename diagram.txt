@@ -1,0 +1,57 @@
+hel-rescue-toolkit/
+📁 hel-rescue-toolkit/
+├── 📄 __init__.py
+├── 📁 helwan
+│   ├── 📄 __init__.py
+│   ├── 📁 backend
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 runner.py
+│   │   └── 📁 scripts
+│   │       ├── 📄 __init__.py
+│   │       ├── 📄 backup_home_directory.sh
+│   │       ├── 📄 check_disk_space_usage.sh
+│   │       ├── 📄 check_journal_logs.sh
+│   │       ├── 📄 clean_cache.sh
+│   │       ├── 📄 create_new_user.sh
+│   │       ├── 📄 create_system_snapshot.sh
+│   │       ├── 📄 downgrade_specific_package.sh
+│   │       ├── 📄 export_logs.sh
+│   │       ├── 📄 fix_grub.sh
+│   │       ├── 📄 fix_network.sh
+│   │       ├── 📄 fix_permissions.sh
+│   │       ├── 📄 force_reinstall_package.sh
+│   │       ├── 📄 kill_rogue_processes.sh
+│   │       ├── 📄 list_mounted_filesystems.sh
+│   │       ├── 📄 open_chroot.sh
+│   │       ├── 📄 regen_initramfs.sh
+│   │       ├── 📄 reset_user_password.sh
+│   │       ├── 📄 restore_system_from_snapshot.sh
+│   │       ├── 📄 rollback_updates.sh
+│   │       ├── 📄 safe_exit.sh
+│   │       └── 📄 system_check.sh
+│   ├── 📄 main.py
+│   └── 📁 resources
+│       ├── 📄 __init__.py
+│       ├── 📁 icons
+│       │   ├── 📄 __init__.py
+│       │   ├── 📄 about.png
+│       │   ├── 📄 backup.png
+│       │   ├── 📄 chroot.png
+│       │   ├── 📄 clean.png
+│       │   ├── 📄 disk_space.png
+│       │   ├── 📄 downgrade.png
+│       │   ├── 📄 export_logs.png
+│       │   ├── 📄 grub.png
+│       │   ├── 📄 help.png
+│       │   ├── 📄 logo.png
+│       │   ├── 📄 mountpoints.png
+│       │   ├── 📄 network.png
+│       │   ├── 📄 permissions.png
+│       │   ├── 📄 reinstall.png
+│       │   ├── 📄 rollback.png
+│       │   ├── 📄 safe_exit.png
+│       │   └── 📄 status.png
+│       └── 📄 usage_help.txt
+├── 📄 helwan-rescue.desktop
+├── 📄 requirements.txt
+└── 📄 run.py
