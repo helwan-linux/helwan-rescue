@@ -1,0 +1,69 @@
+ إمكانيات برنامج "Helwan Rescue Toolkit" يمكنك نشرها:
+
+استعادة النظام الشاملة: يوفر مجموعة واسعة من أدوات الاستعادة لإصلاح مشاكل نظام التشغيل.
+
+إدارة Chroot سهلة: يدعم الدخول والخروج الآمن من بيئة Chroot، مع عرض حالتها.
+
+إصلاح مشاكل التمهيد والشبكة: يتضمن سكربتات مخصصة لإصلاح GRUB/EFI ومشاكل الشبكة.
+
+صيانة النظام الأساسية: يمكنه إعادة إنشاء Initramfs، إصلاح الصلاحيات، وتنظيف ذاكرة التخزين المؤقت والسجلات.
+
+إدارة الحزم المتقدمة: يسمح بتخفيض إصدار الحزم أو إعادة تثبيتها بالقوة.
+
+أدوات فحص وتشخيص النظام: يوفر أدوات لفحص حالة النظام، مساحة القرص، وسجلات Journal.
+
+إدارة المستخدمين: يمكنه إعادة تعيين كلمات مرور المستخدمين وإنشاء مستخدمين جدد.
+
+دعم لقطات Btrfs: يوفر خيارات لإنشاء واستعادة لقطات نظام الملفات Btrfs.
+
+إنهاء العمليات: القدرة على إنهاء العمليات غير المستجيبة.
+
+تصدير السجلات: يتيح تصدير سجلات العمليات إلى وحدة تخزين USB لسهولة التشخيص.
+
+النسخ الاحتياطي لمجلد المنزل: يوفر خيارًا لنسخ مجلد المنزل احتياطيًا.
+
+قائمة أنظمة الملفات المركبة: يعرض أنظمة الملفات المثبتة حاليًا.
+
+دعم اللغات: واجهة مستخدم متعددة اللغات (الإنجليزية والعربية).
+
+إنشاء سكربتات مخصصة: يتيح للمستخدمين إنشاء وحفظ سكربتات Bash مخصصة لتلبية احتياجاتهم.
+
+واجهة رسومية سهلة الاستخدام (GUI): يوفر واجهة رسومية بديهية وسهلة التنقل بدلاً من سطر الأوامر.
+
+عرض مخرجات السكربتات: يعرض مخرجات تنفيذ السكربتات في نافذة منفصلة، مع خيار حفظ السجل.
+
+=================================================
+points about the capabilities of "Helwan Rescue Toolkit" that you can share:
+
+Comprehensive System Recovery: Offers a wide range of recovery tools to fix operating system issues.
+
+Easy Chroot Management: Supports safe entry and exit from the Chroot environment, with status display.
+
+Boot and Network Repair: Includes dedicated scripts for fixing GRUB/EFI and network problems.
+
+Essential System Maintenance: Can regenerate Initramfs, fix permissions, and clean cache and logs.
+
+Advanced Package Management: Allows downgrading or forcefully reinstalling packages.
+
+System Check and Diagnostic Tools: Provides tools to check system status, disk space, and journal logs.
+
+User Management: Capable of resetting user passwords and creating new users.
+
+Btrfs Snapshot Support: Offers options to create and restore Btrfs filesystem snapshots.
+
+Process Termination: Ability to kill rogue or unresponsive processes.
+
+Log Export: Enables exporting operation logs to a USB drive for easy diagnosis.
+
+Home Directory Backup: Provides an option to back up the home directory.
+
+List Mounted Filesystems: Displays currently mounted filesystems.
+
+Multi-language Support: User interface available in multiple languages (English and Arabic).
+
+Custom Script Creation: Allows users to create and save custom Bash scripts to meet their specific needs.
+
+User-Friendly Graphical Interface (GUI): Offers an intuitive and easy-to-navigate graphical interface instead of the command line.
+
+Script Output Display: Shows the output of script execution in a separate window, with an option to save the log.
+
