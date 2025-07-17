@@ -1,0 +1,57 @@
+Welcome to Helwan Rescue Toolkit!
+
+This powerful and elegant tool provides a comprehensive set of utilities to help you diagnose and fix common to complex issues in your Arch Linux-based system. Designed for both novice and expert users, it automates many recovery tasks and offers detailed diagnostics.
+
+Usage Instructions:
+
+1.  **Run as Root:** Most operations in this toolkit require root privileges. Please ensure you run the application with `sudo` (e.g., `sudo python run.py`) or as the root user from a Live ISO environment.
+
+2.  **Understanding Chroot Status:**
+    * **"Chroot Status: Not Active 🔴"**: Indicates that the tool is currently operating on the Live ISO environment (or the system it's launched from). To perform repairs on your *installed* system, you must first activate the chroot environment.
+    * **"Chroot Status: Active ✅"**: Indicates that your installed system's root partition has been successfully mounted to `/mnt`, and subsequent repair operations will be performed directly on your broken system's files.
+
+3.  **Core Chroot Management:**
+    * **Open Chroot:** This crucial function attempts to automatically detect and mount your installed Arch Linux root partition to `/mnt`. It also binds essential system directories (`/dev`, `/proc`, `/sys`, `/run`) for a proper chroot environment. This must be the first step for most repair operations on a broken system. The status label will change to "Active ✅" upon success.
+    * **Safe Exit:** After performing repairs, use this button to safely unmount all partitions from `/mnt`, ensuring a clean exit and preventing data corruption. The status label will revert to "Not Active 🔴".
+
+4.  **System Repair & Maintenance Tools:**
+    * **Fix GRUB / EFI:** Reinstalls GRUB (for UEFI systems) and regenerates its configuration. Essential for boot loader issues.
+    * **Repair Network:** Restarts the NetworkManager service and sets DNS to 1.1.1.1, which can help resolve connectivity problems.
+    * **Regen Initramfs:** Regenerates the initial RAM filesystem for your installed kernel. Useful if your system fails to boot due to kernel module issues.
+    * **Fix Permissions:** Resets common directory permissions for `/home`, `/root`, and `/tmp` to their secure defaults, resolving permission-related access issues.
+    * **Rollback Last Update:** Attempts to revert your system to a previous state by reinstalling the latest cached package(s) before a problematic update.
+    * **Downgrade Package:** Allows you to downgrade a specific package to an older cached version. You will be prompted to enter the package name and then select from available cached versions.
+    * **Force Reinstall Package:** Forces a reinstallation of a specified package, including `--overwrite "*"`, which can fix corrupted package files or resolve conflicts.
+
+5.  **Diagnostic & Data Management Tools:**
+    * **System Status Check:** Displays vital system information like kernel version, RAM usage, disk space on root, and internet connectivity. Very useful for quick diagnostics.
+    * **Clean Cache / Logs:** Cleans the `pacman` package cache and removes old log files (older than 7 days) to free up disk space.
+    * **Export Logs to USB:** Collects all system logs from `/var/log` into a compressed archive (`.tar.gz`) and attempts to copy it to a detected mounted USB device for external analysis.
+    * **Backup Home Directory:** Creates a compressed backup of all user home directories (`/home`) and attempts to save it to the first detected mounted USB device. Crucial for data safety before major repairs.
+    * **List Mounted Filesystems:** Provides a detailed list of all currently mounted filesystems on your system, helping you understand disk partitions and their mount points.
+    * **Check Disk Space:** Displays a summary of disk space usage (`df -h`) and lists the top 10 largest directories from the root (`du -sh /*`) to help identify space hogs.
+    * **Check Journal Logs:** Allows you to view recent system journal logs. You can specify whether to view boot logs, logs for a specific service, or all recent logs, aiding in detailed problem diagnosis.
+
+6.  **User Management Tools:**
+    * **Reset User Password:** Prompts you for a username and a new password (with confirmation) to reset an existing user's password.
+    * **Create New User:** Guides you through creating a new user account on your system, including setting a username and password.
+
+7.  **Advanced / Snapshot Management (Btrfs Specific):**
+    * **Create Snapshot:** For systems using Btrfs as the root filesystem, this tool creates a read-only snapshot of your current system state in `/.snapshots/`. An excellent way to create a restore point before making risky changes.
+    * **Restore From Snapshot:** This is an advanced and potentially destructive operation. For Btrfs, it provides guidance on how to set a snapshot as the default subvolume. **Note:** A full restore often requires booting from a Live ISO and manually updating GRUB. Use with extreme caution and ensure you understand the process. The script will provide specific Btrfs commands.
+
+8.  **Rogue Process Management:**
+    * **Kill Rogue Processes:** Displays the top 5 processes by CPU and memory usage and allows you to forcefully terminate a process by its PID (Process ID). **WARNING: Use this function with extreme caution. Killing essential system processes can lead to immediate system instability or data loss. Only terminate processes if you are certain of their impact.**
+
+9.  **General Tips & Troubleshooting:**
+    * **Monitor Output:** After clicking a button, a message box will appear showing the output of the executed script (success or failure) and any relevant messages.
+    * **Log File:** All operations are logged to `~/.cache/helwan-rescue/history.log` (or `/tmp/helwan-rescue.log` if home is not writable). You can view this log via "Help" -> "Show Operation Log" to review past actions and troubleshoot.
+    * **Change Script Path:** If your `backend/scripts` directory is not automatically detected or you move it, you can manually point the application to the correct script location via the "Change..." button next to the "Scripts:" label.
+    * **Dependency Check:** Ensure you have `python` and `PyQt5` installed on your Live ISO or host system (`pip install PyQt5`). For the Bash scripts, ensure standard Arch Linux utilities (`pacman`, `grub-install`, `mkinitcpio`, `lsblk`, `df`, `du`, `journalctl`, `btrfs-progs` if using Btrfs, `tar`, `ping`, `findmnt`, `xdg-open`) are available.
+
+Important Notes:
+* Always back up your data before performing system-level repairs.
+* Use these tools with caution and understand their purpose.
+* For further assistance or advanced troubleshooting, please refer to the comprehensive Arch Linux Wiki or relevant documentation.
+
+---
