@@ -8,7 +8,7 @@ import datetime
 SCRIPTS_DIR = Path("/usr/share/helwan/scripts") # Default or placeholder path
 
 # Log file for all operations
-LOGFILE = Path("/var/log/helwan-rescue-toolkit.log") # Or a more user-accessible path like /tmp/helwan-rescue-toolkit.log
+LOGFILE = Path("/var/log/helwan-rescue-toolkit.log")
 
 def _log_message(message):
     """Appends a message with a timestamp to the log file."""
@@ -26,12 +26,16 @@ def _log_message(message):
 
 def run_script_async(script_path, *args):
     """
-    Runs a shell script asynchronously and logs its start.
+    Runs a script (shell or python) asynchronously and logs its start.
     Returns the command list for QProcess.
     """
-    full_command = ["bash", str(script_path)] + list(args)
+    if script_path.suffix == '.py':
+        full_command = ["python", str(script_path)] + list(args) # تم التغيير من "python3" إلى "python"
+    else: # Default to bash for .sh scripts or others
+        full_command = ["bash", str(script_path)] + list(args)
+            
     _log_message(f"Executing: {' '.join(full_command)}")
-    return full_command # Return the command for QProcess to handle in main.py
+    return full_command
 
 
 def check_chroot_status():
