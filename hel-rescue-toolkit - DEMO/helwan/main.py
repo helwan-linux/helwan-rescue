@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (
     QFileDialog, QMenuBar, QStatusBar,
     QDialog, QTextBrowser, QGridLayout, QLineEdit,
     QInputDialog, QComboBox, QFormLayout, QTextEdit,
-    QActionGroup # Imported QActionGroup
+    QActionGroup
 )
 import subprocess
 import os
@@ -227,9 +227,11 @@ class HelpDialog(QDialog):
 
 
 class ScriptOutputDialog(QDialog):
-    def __init__(self, script_command, parent=None):
+    # تم تحديث __init__ لقبول original_script_path
+    def __init__(self, script_command, original_script_path, parent=None):
         super().__init__(parent)
-        self.setWindowTitle(_("Script Output:") + f" {script_command[1].name}")
+        # استخدام original_script_path.name للحصول على اسم الملف
+        self.setWindowTitle(_("Script Output:") + f" {original_script_path.name}") 
         self.setMinimumSize(800, 600)
 
         self.command = script_command
@@ -316,7 +318,7 @@ class PackageInputDialog(QDialog):
         
         self.label = QLabel(_(prompt))
         self.line_edit = QLineEdit(self)
-        self.line_edit.setPlaceholderText(_("Enter package name here...")) # Placeholder text can be translated
+        self.line_edit.setPlaceholderText(_("Enter package name here..."))
         
         layout.addRow(self.label)
         layout.addRow(_("Package Name:"), self.line_edit)
@@ -335,7 +337,6 @@ class PackageInputDialog(QDialog):
     def get_package_name(self):
         return self.line_edit.text()
 
-# NEW: Dialog for creating a custom script
 class CreateScriptDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -352,8 +353,7 @@ class CreateScriptDialog(QDialog):
 
         self.script_content_input = QTextEdit(self)
         self.script_content_input.setPlaceholderText(_("Script Content (Bash Script)"))
-        self.script_content_input.setAcceptRichText(False) # Ensure plain text input
-        # Add a default shebang
+        self.script_content_input.setAcceptRichText(False)
         self.script_content_input.setText("#!/bin/bash\n\n")
         layout.addWidget(self.script_content_input)
 
@@ -390,7 +390,6 @@ class CreateScriptDialog(QDialog):
         try:
             with open(script_path, "w", encoding="utf-8") as f:
                 f.write(content)
-            # Make the script executable
             os.chmod(script_path, os.stat(script_path).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
             QMessageBox.information(self, _("Save Script"), _("Script saved successfully!"))
             self.accept()
@@ -407,7 +406,7 @@ class RecoveryWindow(QMainWindow):
         self.setWindowIcon(self.get_icon("logo.png"))
 
         self.init_ui()
-        self.retranslateUi() # Initial translation
+        self.retranslateUi()
         self.update_chroot_status()
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_chroot_status)
@@ -416,15 +415,15 @@ class RecoveryWindow(QMainWindow):
     def init_ui(self):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        self.main_layout = QVBoxLayout(central_widget) # Make main_layout accessible for retranslateUi
+        self.main_layout = QVBoxLayout(central_widget)
 
         self.scripts_path_layout = QHBoxLayout()
-        self.script_path_label = QLabel() # Text set in retranslateUi
+        self.script_path_label = QLabel()
         self.scripts_path_layout.addWidget(self.script_path_label)
         self.main_layout.addLayout(self.scripts_path_layout)
 
         self.chroot_status_layout = QHBoxLayout()
-        self.chroot_status_label = QLabel() # Text set in retranslateUi
+        self.chroot_status_label = QLabel()
         self.chroot_status_layout.addWidget(self.chroot_status_label)
         self.main_layout.addLayout(self.chroot_status_layout)
 
@@ -432,7 +431,6 @@ class RecoveryWindow(QMainWindow):
         self.buttons_grid_layout.setHorizontalSpacing(10)
         self.buttons_grid_layout.setVerticalSpacing(10)
 
-        # Store button references to update their text during retranslateUi
         self.buttons = [] 
         button_specs = [
             ("chroot.png", "Open Chroot", "open_chroot.sh"),
@@ -444,26 +442,25 @@ class RecoveryWindow(QMainWindow):
             ("rollback.png", "Rollback Last Update", "rollback_updates.sh"),
             ("downgrade.png", "Downgrade Package", "downgrade_package_handler"),
             ("reinstall.png", "Force Reinstall Package", "force_reinstall_package_handler"),
-            ("status.png", "System Status Check", "system_check.sh"),
-            ("clean.png", "Clean Cache / Logs", "clean_cache.sh"),
-            ("export_logs.png", "Export Logs to USB", "export_logs.sh"),
-            ("backup.png", "Backup Home Directory", "backup_home.sh"),
-            ("mountpoints.png", "List Mounted Filesystems", "list_mounts.sh"),
+            ("status.png", "System Status Check", "system_check.py"),
+            ("clean.png", "Clean Cache / Logs", "clean_cache.py"),
+            ("export_logs.png", "Export Logs to USB", "export_logs.py"),
+            ("backup.png", "Backup Home Directory", "backup_home_directory.py"),
+            ("mountpoints.png", "List Mounted Filesystems", "list_mounted_filesystems.py"),
             ("disk_space.png", "Check Disk Space", "check_disk_space.py"),
-            ("journal.png", "Check Journal Logs", "check_journal.sh"),
+            ("journal.png", "Check Journal Logs", "check_journal_logs.py"),
             ("reset_password.png", "Reset User Password", "reset_user_password.sh"),
-            ("add_user.png", "Create New User", "create_new_user.sh"),
-            ("snapshot.png", "Create Snapshot (Btrfs)", "btrfs_create_snapshot.sh"),
-            ("restore_snapshot.png", "Restore From Snapshot (Btrfs)", "btrfs_restore_snapshot.sh"),
-            ("kill_process.png", "Kill Rogue Processes", "kill_rogue_process.sh"),
-            # NEW: Custom Script Creation Button
-            ("create.png", "Create Custom Script", "create_custom_script_handler"), # Assuming 'create.png' exists
+            ("add_user.png", "Create New User", "create_new_user.py"),
+            ("snapshot.png", "Create Snapshot (Btrfs)", "create_system_snapshot.py"),
+            ("restore_snapshot.png", "Restore From Snapshot (Btrfs)", "restore_system_from_snapshot.py"),
+            ("kill_process.png", "Kill Rogue Processes", "kill_rogue_processes.py"),
+            ("create.png", "Create Custom Script", "create_custom_script_handler"),
         ]
 
         row, col = 0, 0
         for icon_filename, text, script_name_or_handler in button_specs:
             button = self.create_grid_button(icon_filename, text, script_name_or_handler)
-            self.buttons.append((button, text)) # Store button and original text for retranslation
+            self.buttons.append((button, text))
             self.buttons_grid_layout.addWidget(button, row, col)
             col += 1
             if col >= 3:
@@ -473,29 +470,27 @@ class RecoveryWindow(QMainWindow):
         self.main_layout.addLayout(self.buttons_grid_layout)
         self.main_layout.addStretch(1)
 
-        # Menu Bar setup
         self.menubar = self.menuBar()
 
-        self.file_menu = self.menubar.addMenu("") # Text set in retranslateUi
-        self.exit_action = self.file_menu.addAction("") # Text set in retranslateUi
+        self.file_menu = self.menubar.addMenu("")
+        self.exit_action = self.file_menu.addAction("")
         self.exit_action.triggered.connect(self.close)
 
-        self.help_menu = self.menubar.addMenu("") # Text set in retranslateUi
-        self.usage_help_action = self.help_menu.addAction("") # Text set in retranslateUi
+        self.help_menu = self.menubar.addMenu("")
+        self.usage_help_action = self.help_menu.addAction("")
         self.usage_help_action.triggered.connect(self.show_help)
-        self.show_log_action = self.help_menu.addAction("") # Text set in retranslateUi
+        self.show_log_action = self.help_menu.addAction("")
         self.show_log_action.triggered.connect(self.open_log_file)
-        self.about_action = self.help_menu.addAction("") # Text set in retranslateUi
+        self.about_action = self.help_menu.addAction("")
         self.about_action.triggered.connect(self.show_about)
 
-        # Language selection menu
-        self.language_menu = self.menubar.addMenu("") # Text set in retranslateUi
+        self.language_menu = self.menubar.addMenu("")
         self.language_group = QActionGroup(self)
         self.language_group.setExclusive(True)
 
         self.lang_actions = {}
         for lang_code, lang_name in LANGUAGES.items():
-            action = self.language_menu.addAction(_(lang_name)) # Use translated name for menu item
+            action = self.language_menu.addAction(_(lang_name))
             action.setCheckable(True)
             action.setData(lang_code)
             self.language_group.addAction(action)
@@ -505,14 +500,13 @@ class RecoveryWindow(QMainWindow):
         
         self.language_group.triggered.connect(self.change_language)
 
-        self.setStatusBar(QStatusBar(self)) # Status Bar
+        self.setStatusBar(QStatusBar(self))
 
-    # NEW: Function to retranslate all UI elements
     def retranslateUi(self):
         global current_language
         self.setWindowTitle(_("Helwan Rescue Toolkit"))
         self.script_path_label.setText(_("Scripts:") + f" {SCRIPTS_DIR}")
-        self.chroot_status_label.setText(_("Chroot Status: Checking...")) # Initial state, updated by timer
+        self.chroot_status_label.setText(_("Chroot Status: Checking..."))
         
         for button, original_text in self.buttons:
             button.setText(_(original_text))
@@ -525,14 +519,11 @@ class RecoveryWindow(QMainWindow):
         self.about_action.setText(_("About"))
         self.language_menu.setTitle(_("Language"))
 
-        # Update language menu item texts
         for lang_code, lang_action in self.lang_actions.items():
             lang_action.setText(_(LANGUAGES[lang_code]))
 
-        # Re-set layout direction for Arabic if needed (might require QApplication restart for full effect)
         if current_language == "ar":
             self.setLayoutDirection(Qt.RightToLeft)
-            # For menu bar, sometimes explicit alignment is needed
             self.menuBar().setLayoutDirection(Qt.RightToLeft)
         else:
             self.setLayoutDirection(Qt.LeftToRight)
@@ -544,8 +535,6 @@ class RecoveryWindow(QMainWindow):
         if new_lang != current_language:
             current_language = new_lang
             self.retranslateUi()
-            # For full RTL support on widgets like QFormLayout, often restart is needed or specific styling
-            # For simple labels and buttons, retranslateUi usually suffices.
 
     def create_grid_button(self, icon_filename, text, script_name_or_handler):
         button = QPushButton(text) 
@@ -557,17 +546,19 @@ class RecoveryWindow(QMainWindow):
         
         button.setIconSize(QSize(48, 48))
         
-        if isinstance(script_name_or_handler, str) and script_name_or_handler.endswith(".sh"):
+        if isinstance(script_name_or_handler, str) and (script_name_or_handler.endswith(".sh") or script_name_or_handler.endswith(".py")):
             button.clicked.connect(lambda: self.execute_script_with_output(script_name_or_handler))
         else:
             if script_name_or_handler == "downgrade_package_handler":
                 button.clicked.connect(self.downgrade_package_gui)
             elif script_name_or_handler == "force_reinstall_package_handler":
                 button.clicked.connect(self.force_reinstall_package_gui)
-            elif script_name_or_handler == "create_custom_script_handler": # NEW Handler
+            elif script_name_or_handler == "create_custom_script_handler":
                 button.clicked.connect(self.create_custom_script_gui)
             else:
-                button.clicked.connect(lambda: self.execute_script_with_output(script_name_or_handler)) 
+                # هذا الجزء قد لا يتم الوصول إليه عمليًا إذا تم التعامل مع جميع handlers
+                # ولكن من الجيد أن يكون هناك fallback
+                button.clicked.connect(lambda: self.execute_script_with_output(script_name_or_handler))
         return button
 
     def get_icon(self, icon_name):
@@ -583,7 +574,8 @@ class RecoveryWindow(QMainWindow):
             return
 
         command = run_script_async(script_path, *args)
-        output_dialog = ScriptOutputDialog(command, self)
+        # تمرير كائن Path (script_path) إلى ScriptOutputDialog
+        output_dialog = ScriptOutputDialog(command, script_path, self) 
         output_dialog.exec_()
 
     def update_chroot_status(self):
@@ -629,7 +621,7 @@ class RecoveryWindow(QMainWindow):
         if dialog.exec_() == QDialog.Accepted:
             pkg_name = dialog.get_package_name().strip()
             if pkg_name:
-                self.execute_script_with_output("downgrade_package.sh", pkg_name)
+                self.execute_script_with_output("downgrade_specific_package.py", pkg_name) 
             else:
                 QMessageBox.warning(self, _("Input Error"), _("Package name cannot be empty."))
 
@@ -638,11 +630,10 @@ class RecoveryWindow(QMainWindow):
         if dialog.exec_() == QDialog.Accepted:
             pkg_name = dialog.get_package_name().strip()
             if pkg_name:
-                self.execute_script_with_output("force_reinstall_package.sh", pkg_name)
+                self.execute_script_with_output("force_reinstall_package.py", pkg_name) 
             else:
                 QMessageBox.warning(self, _("Input Error"), _("Package name cannot be empty."))
 
-    # NEW: Handler for creating custom script via GUI
     def create_custom_script_gui(self):
         dialog = CreateScriptDialog(self)
         dialog.exec_()
@@ -650,8 +641,7 @@ class RecoveryWindow(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    # This line sets the main application icon
-    app.setWindowIcon(QIcon(str(ICON_DIR / "logo.png"))) 
+    app.setWindowIcon(QIcon(str(ICON_DIR / "logo.png")))
     window = RecoveryWindow()
     window.show()
     sys.exit(app.exec_())
